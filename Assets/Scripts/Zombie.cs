@@ -7,6 +7,9 @@ public class Zombie : Opponent
     [SerializeField] private GameObject attackPoint;
     [SerializeField] private float attackRadius;
 
+    private float cooldown = 3f;
+    private float nextAttack = 0f;
+
     private void Start()
     {
         localScaleX = transform.localScale.x;
@@ -15,7 +18,7 @@ public class Zombie : Opponent
         distanceOfRay = lengthOfRay;
     }
 
-    private void FixedUpdate()
+    private void Update()
     {
         Attack();
     }
@@ -42,19 +45,30 @@ public class Zombie : Opponent
         {
             if (collider.gameObject.CompareTag("Player"))
             {
-                animator.SetBool(IS_ATTACKING, true);
+                AttackDelay(collider);
                 return;
             }
         }
 
-        print("NOT ATTACKING");
         animator.SetBool(IS_ATTACKING, false);
-
+        nextAttack = 0f;
         base.Move();
     }
 
+    public void AttackDelay(Collider2D collider)
+    {
+        if (nextAttack > 0)
+        {
+            nextAttack -= Time.deltaTime;
+        }
+        else if (nextAttack <= 0)
+        {
+            nextAttack = cooldown;
+            animator.SetBool(IS_ATTACKING, true);
+            collider.GetComponent<PlayerController>().TakeDamage(20);
+        }
+    }
 
-    
     private void OnDrawGizmosSelected()
     {
         Gizmos.DrawWireSphere(attackPoint.transform.position, attackRadius);

@@ -1,29 +1,36 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
+    [Header("Required Fields")]
+    [SerializeField] private int maxHealth;
     [SerializeField] private Rigidbody2D body;
     [SerializeField] private Animator animator;
     [SerializeField] private float speed = 4f;
     [SerializeField] private float jumpForce = 5f;
-    private bool isGrounded = true;
     [SerializeField] private SpriteRenderer renderer;
-    private const string RUNNING = "Running";
-
-    // FOR ATTACKING
+    
+    [Header("Attack Properties")]
     [SerializeField] private GameObject attackPoint;
     [SerializeField] private LayerMask layers;
     [SerializeField] private float attackRange = 5f;
 
+    private float currentAttackRate = 0f;
+    private const string RUNNING = "Running";
+    private int currentHealth;
+    private bool isGrounded = true;
+
+    private void Start()
+    {
+        this.currentHealth = this.maxHealth;
+    }
+
     void Update()
     {
         MovePlayer();
-    }
-
-    private void FixedUpdate()
-    {
         Attack();
         Jump();
     }
@@ -64,30 +71,34 @@ public class PlayerController : MonoBehaviour
     // Attack Function
     void Attack()
     {
-
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Time.time >= currentAttackRate)
         {
-            animator.SetTrigger("Attack");
-
-            Collider2D[] hit = Physics2D.OverlapCircleAll(attackPoint.transform.position, attackRange, layers);
-
-            foreach (Collider2D collider in  hit) {
-
-                collider.gameObject.GetComponent<Opponent>().TakeDamage(20);
-            }
-        }
-
-        if (Input.GetKeyDown(KeyCode.Q))
-        {
-            float currentAttackRange = 3f;
-
-            animator.SetTrigger("Skill_1");
-
-            Collider2D[] hit = Physics2D.OverlapCircleAll(attackPoint.transform.position, currentAttackRange, layers);
-
-            foreach (Collider2D collider in hit)
+            if (Input.GetKey(KeyCode.Space))
             {
-                collider.gameObject.GetComponent<Opponent>().TakeDamage(30);
+                animator.SetTrigger("Attack");
+
+                Collider2D[] hit = Physics2D.OverlapCircleAll(attackPoint.transform.position, attackRange, layers);
+
+                foreach (Collider2D collider in hit)
+                {
+                    collider.gameObject.GetComponent<Opponent>().TakeDamage(20);
+                }
+                currentAttackRate = Time.time + 1;
+            }
+
+            if (Input.GetKey(KeyCode.Q))
+            {
+                float currentAttackRange = 3f;
+
+                animator.SetTrigger("Skill_1");
+
+                Collider2D[] hit = Physics2D.OverlapCircleAll(attackPoint.transform.position, currentAttackRange, layers);
+
+                foreach (Collider2D collider in hit)
+                {
+                    collider.gameObject.GetComponent<Opponent>().TakeDamage(30);
+                }
+                currentAttackRate = Time.time + 1;
             }
         }
     }
@@ -104,14 +115,11 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    public void TakeDamage(int damage)
     {
-        if (collision.gameObject.CompareTag("Ground"))
-        {
-            isGrounded = true;
-        }
+        this.currentHealth -= damage;
+        print(currentHealth);
     }
-
     void FlipAttackPoint(bool isFlip)
     {
         Vector3 currentAttackPointPosition = attackPoint.transform.localPosition;
@@ -126,6 +134,15 @@ public class PlayerController : MonoBehaviour
         }
         attackPoint.transform.localPosition = currentAttackPointPosition;
     }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Ground"))
+        {
+            isGrounded = true;
+        }
+    }
+
     private void OnDrawGizmosSelected()
     {
         if (attackPoint != null)

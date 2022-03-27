@@ -59,7 +59,8 @@ public abstract class Opponent : MonoBehaviour
             FlipSprite(false);
             FlipLineOfSight(false);
         }
-        transform.position = currentPosition;
+        //transform.position = currentPosition;
+        transform.position = Vector2.MoveTowards(transform.position, toFollow.position, 1f * Time.deltaTime);
     }
 
 
@@ -71,14 +72,13 @@ public abstract class Opponent : MonoBehaviour
         if (this.currentHealth <= 0)
         {
             animator.SetBool(DIE, true);
-            Invoke("DestoryThisObject", 1f);
+            Invoke("DestroyThisObject", 1f);
         }
     }
 
 
-    void DestoryThisObject()
+    void DestroyThisObject()
     {
-        gameObject.SetActive(false);
         Destroy(gameObject);
     }
 
