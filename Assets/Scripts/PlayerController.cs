@@ -17,6 +17,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private GameObject attackPoint;
     [SerializeField] private LayerMask layers;
     [SerializeField] private float attackRange = 5f;
+    [SerializeField] private HealthBar healthBar;
 
     private float currentAttackRate = 0f;
     private const string RUNNING = "Running";
@@ -115,11 +116,14 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    /** Decrease the health of this game object */
     public void TakeDamage(int damage)
     {
         this.currentHealth -= damage;
-        print(currentHealth);
+
+        this.healthBar.SetCurrentHealth(this.currentHealth);
     }
+
     void FlipAttackPoint(bool isFlip)
     {
         Vector3 currentAttackPointPosition = attackPoint.transform.localPosition;

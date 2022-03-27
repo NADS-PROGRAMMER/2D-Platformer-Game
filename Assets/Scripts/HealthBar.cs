@@ -1,18 +1,27 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class HealthBar : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    [Header("Health Properties")]
+    [SerializeField] private Gradient gradient;
+    [SerializeField] private Slider slider;
+    [SerializeField] private Image fill;
+
+    private int currentHealth;
+
+    private void Start()
     {
-        
+        this.currentHealth = (int) this.slider.maxValue;
+        this.fill.color = gradient.Evaluate(1);
     }
 
-    // Update is called once per frame
-    void Update()
+    public void SetCurrentHealth(int newHealth)
     {
-        
+        this.currentHealth = newHealth;
+        this.slider.value = (int) newHealth;
+        fill.color = gradient.Evaluate(slider.normalizedValue);
     }
 }

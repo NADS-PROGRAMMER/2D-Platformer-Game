@@ -66,7 +66,7 @@ public class Zombie : Opponent
         {
             nextAttack = cooldown;
             animator.SetBool(IS_ATTACKING, true);
-            collider.GetComponent<PlayerController>().TakeDamage(20);
+            collider.GetComponent<PlayerController>().TakeDamage(3);
         }
     }
 
