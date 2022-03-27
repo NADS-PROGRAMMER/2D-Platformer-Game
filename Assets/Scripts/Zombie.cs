@@ -18,6 +18,7 @@ public class Zombie : Opponent
         distanceOfRay = lengthOfRay;
     }
 
+    // MAKE IT SOLID
     private void Update()
     {
         Attack();
