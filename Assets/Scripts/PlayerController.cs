@@ -90,20 +90,22 @@ public class PlayerController : MonoBehaviour
                 currentAttackRate = Time.time + 1;
             }
 
-            if (Input.GetKey(KeyCode.Q))
-            {
-                float currentAttackRange = 3f;
+            //if (Input.GetKey(KeyCode.Q))
+            //{
+            //    //float currentAttackRange = 3f;
 
-                animator.SetTrigger("Skill_1");
+            //    //animator.SetTrigger("Skill_1");
 
-                Collider2D[] hit = Physics2D.OverlapCircleAll(attackPoint.transform.position, currentAttackRange, layers);
+            //    //Collider2D[] hit = Physics2D.OverlapCircleAll(attackPoint.transform.position, currentAttackRange, layers);
 
-                foreach (Collider2D collider in hit)
-                {
-                    collider.gameObject.GetComponent<Opponent>().TakeDamage(30);
-                }
-                currentAttackRate = Time.time + 1;
-            }
+            //    //foreach (Collider2D collider in hit)
+            //    //{
+            //    //    collider.gameObject.GetComponent<Opponent>().TakeDamage(30);
+            //    //}
+            //    //currentAttackRate = Time.time + 1;
+            //    SkillManager.instance.Skill1();
+            //}
+            SkillManager.instance.Skill1();
         }
     }
 
@@ -132,6 +134,7 @@ public class PlayerController : MonoBehaviour
             gameObject.GetComponent<CapsuleCollider2D>().isTrigger = true;
             gameObject.GetComponent<Rigidbody2D>().isKinematic = true;
             animator.SetBool(DIE, true);
+            GameManager.instance.GameOver();
             Invoke("DestroyThisObject", .5f);
         }
     }

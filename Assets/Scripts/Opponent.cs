@@ -45,7 +45,6 @@ public abstract class Opponent : MonoBehaviour
         }
     }
 
-
     public virtual void Move()
     {
         Vector3 currentPosition = transform.position;
