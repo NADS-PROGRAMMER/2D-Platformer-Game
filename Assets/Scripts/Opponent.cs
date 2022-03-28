@@ -18,17 +18,20 @@ public abstract class Opponent : MonoBehaviour
     protected float localScaleX;
 
     /* LINE OF SIGHT */
+    [Header("Line of Sight Properties")]
     protected RaycastHit2D sight;
     protected float xPositionOfRay;
     protected float distanceOfRay;
 
-    // Animation States
+    // ANIMATION STATES
     protected const string IS_WALKING = "WALK";
     protected const string IS_ATTACKING = "ATTACK";
     protected const string IS_RUNNING = "RUN";
     protected const string HIT = "HIT";
     protected const string DIE = "DIE";
 
+    [Header("Item")]
+    [SerializeField] protected Items item;
 
     public Transform ToFollow
     {
@@ -49,18 +52,15 @@ public abstract class Opponent : MonoBehaviour
 
         if (toFollow.position.x < currentPosition.x)
         {
-            currentPosition.x -= movementSpeed * Time.deltaTime;
             FlipSprite(true);
             FlipLineOfSight(true);
         }
         else
         {
-            currentPosition.x += movementSpeed * Time.deltaTime;
             FlipSprite(false);
             FlipLineOfSight(false);
         }
-        //transform.position = currentPosition;
-        transform.position = Vector2.MoveTowards(transform.position, toFollow.position, 1f * Time.deltaTime);
+        transform.position = Vector2.MoveTowards(transform.position, new Vector2(toFollow.position.x, transform.position.y), movementSpeed * Time.deltaTime);
     }
 
 
@@ -79,6 +79,9 @@ public abstract class Opponent : MonoBehaviour
 
     void DestroyThisObject()
     {
+        Items powerup = Instantiate(item);
+        powerup.value = Random.Range(1, 11);
+        powerup.transform.position = gameObject.transform.position;
         Destroy(gameObject);
     }
 

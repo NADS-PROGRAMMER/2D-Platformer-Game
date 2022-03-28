@@ -20,10 +20,13 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private HealthBar healthBar;
 
     private float currentAttackRate = 0f;
-    private const string RUNNING = "Running";
+    
     private int currentHealth;
     private bool isGrounded = true;
 
+    // Animation States
+    private const string DIE = "DIE";
+    private const string RUNNING = "Running";
     private void Start()
     {
         this.currentHealth = this.maxHealth;
@@ -116,14 +119,25 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+
     /** Decrease the health of this game object */
     public void TakeDamage(int damage)
     {
         this.currentHealth -= damage;
 
         this.healthBar.SetCurrentHealth(this.currentHealth);
+
+        if (this.currentHealth <= 0)
+        {
+            gameObject.GetComponent<CapsuleCollider2D>().isTrigger = true;
+            gameObject.GetComponent<Rigidbody2D>().isKinematic = true;
+            animator.SetBool(DIE, true);
+            Invoke("DestroyThisObject", .5f);
+        }
     }
 
+
+    /** Flips the attack point of this game object */
     void FlipAttackPoint(bool isFlip)
     {
         Vector3 currentAttackPointPosition = attackPoint.transform.localPosition;
@@ -139,11 +153,20 @@ public class PlayerController : MonoBehaviour
         attackPoint.transform.localPosition = currentAttackPointPosition;
     }
 
+
+    /** */
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Ground"))
         {
             isGrounded = true;
+        }
+
+        if (collision.gameObject.CompareTag("Heart"))
+        {
+            this.currentHealth += collision.gameObject.GetComponent<Items>().value;
+            this.healthBar.SetCurrentHealth(this.currentHealth);
+            Destroy(collision.gameObject);
         }
     }
 
@@ -151,5 +174,10 @@ public class PlayerController : MonoBehaviour
     {
         if (attackPoint != null)
             Gizmos.DrawWireSphere(attackPoint.transform.position, attackRange);
+    }
+
+    public void DestroyThisObject()
+    {
+        Destroy(gameObject);
     }
 }

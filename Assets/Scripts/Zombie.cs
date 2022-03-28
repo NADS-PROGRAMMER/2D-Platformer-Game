@@ -10,6 +10,7 @@ public class Zombie : Opponent
     private float cooldown = 3f;
     private float nextAttack = 0f;
 
+
     private void Start()
     {
         localScaleX = transform.localScale.x;
@@ -18,12 +19,13 @@ public class Zombie : Opponent
         distanceOfRay = lengthOfRay;
     }
 
+
     // MAKE IT SOLID
     private void Update()
     {
         Attack();
     }
-    
+
 
     public override void Attack()
     {
@@ -56,6 +58,7 @@ public class Zombie : Opponent
         base.Move();
     }
 
+
     public void AttackDelay(Collider2D collider)
     {
         if (nextAttack > 0)
@@ -69,6 +72,7 @@ public class Zombie : Opponent
             collider.GetComponent<PlayerController>().TakeDamage(3);
         }
     }
+
 
     private void OnDrawGizmosSelected()
     {

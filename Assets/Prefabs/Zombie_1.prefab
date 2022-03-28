@@ -186,6 +186,7 @@ MonoBehaviour:
   maxHealth: 100
   movementSpeed: 3
   lengthOfRay: 5
+  item: {fileID: 489015790943483851, guid: 5b1d466365645b24683effdae60ee0cd, type: 3}
   attackPoint: {fileID: 1140497238}
   attackRadius: 0.64
 --- !u!95 &2216405845356215027
