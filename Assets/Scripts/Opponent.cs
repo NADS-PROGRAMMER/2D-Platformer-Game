@@ -66,11 +66,15 @@ public abstract class Opponent : MonoBehaviour
     public virtual void TakeDamage(int damage)
     {
         this.currentHealth -= damage;
+
         animator.SetTrigger(HIT);
-        
+
         if (this.currentHealth <= 0)
         {
             animator.SetBool(DIE, true);
+            gameObject.GetComponent<Collider2D>().enabled = false;
+            gameObject.GetComponent<Rigidbody2D>().isKinematic = true;
+            UpdateScore();
             Invoke("DestroyThisObject", 1f);
         }
     }
@@ -81,7 +85,14 @@ public abstract class Opponent : MonoBehaviour
         Items powerup = Instantiate(item);
         powerup.value = Random.Range(1, 11);
         powerup.transform.position = gameObject.transform.position;
+        
         Destroy(gameObject);
+    }
+
+
+    void UpdateScore()
+    {
+        GameManager.instance.score += 1;
     }
 
 

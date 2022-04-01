@@ -9,7 +9,14 @@ public class GameManager : MonoBehaviour
     public static GameManager instance;
 
     public RectTransform panel;
+    public TMPro.TextMeshProUGUI textScore;
+    public TMPro.TextMeshProUGUI textHighestScore;
 
+    // Data to Save
+    //[HideInInspector]
+    public int score;
+    public int highestScore = 0;
+    
     private void Awake()
     {
         if (instance != null)
@@ -21,7 +28,22 @@ public class GameManager : MonoBehaviour
         instance = this;
 
         panel.transform.localScale = Vector2.zero;
+        this.highestScore = PlayerPrefs.GetInt("Highest Score", 0);
     }
+
+
+    private void FixedUpdate()
+    {
+        textScore.text = "Your Score: " +  this.score.ToString();
+
+        if (this.score > this.highestScore)
+        {
+            this.highestScore = this.score;
+            PlayerPrefs.SetInt("Highest Score", this.highestScore);
+        }
+        textHighestScore.text = "Highest Score: " + this.highestScore.ToString();
+    }
+
 
     public void GameOver()
     {

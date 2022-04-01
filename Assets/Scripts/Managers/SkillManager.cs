@@ -14,15 +14,14 @@ public class SkillManager : MonoBehaviour
 
     [Header("Skill 1")]
     public Image skill1;
-    public int cooldown;
+    public float cooldown;
     private float currentCooldown1;
 
     [Header("Skill 2")]
+    public GameObject tornado;
     public Image skill2;
-    public int cooldown2;
-    public float currentCooldown2;
-    public GameObject[] spawner;
-    public GameObject power;
+    public float cooldown2;
+    private float currentCooldown2;
 
     private void Start()
     {
@@ -32,14 +31,12 @@ public class SkillManager : MonoBehaviour
             print("INSTANTIATED");
         } 
         currentCooldown1 = 0f;
-
-        StartCoroutine(Skill2());
     }
 
     private void Update()
     {
         Skill1();
-
+        Skill2();
     }
 
     // Sword Swiper
@@ -68,14 +65,19 @@ public class SkillManager : MonoBehaviour
         skill1.fillAmount += (1f / cooldown) * Time.deltaTime;
     }
 
-    // Sprit of Death
-    public IEnumerator Skill2()
+    public void Skill2()
     {
         if (Input.GetKey(KeyCode.W))
         {
-            print("SKILL 2");
-
-            yield return new WaitForSeconds(cooldown2);
+            if (currentCooldown2 <= 0f)
+            {
+                GameObject tornadoObj = Instantiate(tornado);
+                tornadoObj.transform.position = new Vector3(playerAnimator.gameObject.transform.position.x, tornadoObj.transform.position.y, 0);
+                currentCooldown2 = cooldown2;
+                skill2.fillAmount = 0;
+            }
         }
+        currentCooldown2 -= Time.deltaTime;
+        skill2.fillAmount += (1f / cooldown2) * Time.deltaTime;
     }
 }

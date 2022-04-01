@@ -83,29 +83,15 @@ public class PlayerController : MonoBehaviour
 
                 Collider2D[] hit = Physics2D.OverlapCircleAll(attackPoint.transform.position, attackRange, layers);
 
+                SoundManager.instance.Play("Normal Attack");
+                SoundManager.instance.PlayDelayed("Normal Attack", 2f);
+
                 foreach (Collider2D collider in hit)
                 {
                     collider.gameObject.GetComponent<Opponent>().TakeDamage(20);
                 }
                 currentAttackRate = Time.time + 1;
             }
-
-            //if (Input.GetKey(KeyCode.Q))
-            //{
-            //    //float currentAttackRange = 3f;
-
-            //    //animator.SetTrigger("Skill_1");
-
-            //    //Collider2D[] hit = Physics2D.OverlapCircleAll(attackPoint.transform.position, currentAttackRange, layers);
-
-            //    //foreach (Collider2D collider in hit)
-            //    //{
-            //    //    collider.gameObject.GetComponent<Opponent>().TakeDamage(30);
-            //    //}
-            //    //currentAttackRate = Time.time + 1;
-            //    SkillManager.instance.Skill1();
-            //}
-            SkillManager.instance.Skill1();
         }
     }
 
