@@ -27,9 +27,12 @@ public class PlayerController : MonoBehaviour
     // Animation States
     private const string DIE = "DIE";
     private const string RUNNING = "Running";
+
     private void Start()
     {
+
         this.currentHealth = this.maxHealth;
+        this.healthBar.SetCurrentHealth(this.currentHealth);
     }
 
     void Update()
@@ -99,7 +102,7 @@ public class PlayerController : MonoBehaviour
     void Jump()
     {
 
-        if (Input.GetKey(KeyCode.C) && isGrounded)
+        if (Input.GetKeyDown(KeyCode.C) && isGrounded)
         {
             animator.SetTrigger("isJumping");
             body.AddForce(new Vector2(0, jumpForce), ForceMode2D.Impulse);

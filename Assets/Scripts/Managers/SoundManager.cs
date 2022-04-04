@@ -8,6 +8,7 @@ public class SoundManager : MonoBehaviour
 {
     public static SoundManager instance;
     public Sound[] sounds;
+    public string onStartMusic;
 
     private void Start()
     {
@@ -15,7 +16,13 @@ public class SoundManager : MonoBehaviour
         {
             instance = this;
         }
+
+        if (onStartMusic != null)
+        {
+            this.Play(onStartMusic);
+        }
     }
+
     // Start is called before the first frame update
     void Awake()
     {
@@ -25,6 +32,7 @@ public class SoundManager : MonoBehaviour
             sound.audioSource.clip = sound.clip;
             sound.audioSource.volume = sound.volume;
             sound.audioSource.pitch = sound.pitch;
+            sound.audioSource.loop = sound.isLoop;
         }
     }
 
@@ -56,5 +64,7 @@ public class Sound
 
     [HideInInspector]
     public AudioSource audioSource;
+
+    public bool isLoop;
 
 }

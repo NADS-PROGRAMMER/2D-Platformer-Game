@@ -49,7 +49,6 @@ public class Tornado : MonoBehaviour
 
     void Continue()
     {
-        print("CONTINUE AGAIN");
         animator.SetBool("isContinue", true);
         Invoke("End", 6f);
     }

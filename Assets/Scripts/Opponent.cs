@@ -5,6 +5,7 @@ using UnityEngine;
 public abstract class Opponent : MonoBehaviour
 {
     // REQUIRED FIELD OF AN OPPONENT
+    [Header("Opponent Required Fields")]
     [SerializeField] protected SpriteRenderer renderer;
     [SerializeField] protected Animator animator;
     [SerializeField] protected GameObject lineOfSight;
@@ -71,9 +72,9 @@ public abstract class Opponent : MonoBehaviour
 
         if (this.currentHealth <= 0)
         {
-            animator.SetBool(DIE, true);
             gameObject.GetComponent<Collider2D>().enabled = false;
             gameObject.GetComponent<Rigidbody2D>().isKinematic = true;
+            animator.SetBool(DIE, true);
             UpdateScore();
             Invoke("DestroyThisObject", 1f);
         }
@@ -92,7 +93,7 @@ public abstract class Opponent : MonoBehaviour
 
     void UpdateScore()
     {
-        GameManager.instance.score += 1;
+        GameManager.instance.noOfKills += 1;
     }
 
 

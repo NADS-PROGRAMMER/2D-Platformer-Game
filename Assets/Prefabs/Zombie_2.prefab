@@ -125,13 +125,14 @@ MonoBehaviour:
   layers:
     serializedVersion: 2
     m_Bits: 128
-  toFollow: {fileID: 0}
+  toFollow: {fileID: 4696583041681004104, guid: 541da59d375e66a4cb04da6bf7ce3e14, type: 3}
   maxHealth: 100
   movementSpeed: 3
   lengthOfRay: 8
   item: {fileID: 489015790943483851, guid: 5b1d466365645b24683effdae60ee0cd, type: 3}
   attackPoint: {fileID: 6700895683341175198}
   attackRadius: 0.64
+  attackDamage: 3
 --- !u!50 &9032615039681310214
 Rigidbody2D:
   serializedVersion: 4

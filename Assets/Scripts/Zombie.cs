@@ -6,9 +6,10 @@ public class Zombie : Opponent
 {
     [SerializeField] private GameObject attackPoint;
     [SerializeField] private float attackRadius;
+    [SerializeField] private int attackDamage;
 
     private float cooldown = 3f;
-    private float nextAttack = 0f;
+    private float nextAttack = 1.8f;
 
 
     private void Start()
@@ -54,7 +55,7 @@ public class Zombie : Opponent
         }
 
         animator.SetBool(IS_ATTACKING, false);
-        nextAttack = 0f;
+        //nextAttack = 0f;
         base.Move();
     }
 
@@ -64,15 +65,18 @@ public class Zombie : Opponent
         if (nextAttack > 0)
         {
             nextAttack -= Time.deltaTime;
+            if (collider.gameObject.CompareTag("Player"))
+            {
+                animator.SetBool(IS_ATTACKING, true);
+            }
         }
         else if (nextAttack <= 0)
         {
             nextAttack = cooldown;
             animator.SetBool(IS_ATTACKING, true);
-            collider.GetComponent<PlayerController>().TakeDamage(3);
+            collider.GetComponent<PlayerController>().TakeDamage(attackDamage);
         }
     }
-
 
     private void OnDrawGizmosSelected()
     {
