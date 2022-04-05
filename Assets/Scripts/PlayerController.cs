@@ -6,21 +6,23 @@ using UnityEngine.UI;
 public class PlayerController : MonoBehaviour
 {
     [Header("Required Fields")]
-    [SerializeField] private int maxHealth;
     [SerializeField] private Rigidbody2D body;
     [SerializeField] private Animator animator;
+    [SerializeField] private SpriteRenderer renderer;
+    [SerializeField] private int maxHealth;
     [SerializeField] private float speed = 4f;
     [SerializeField] private float jumpForce = 5f;
-    [SerializeField] private SpriteRenderer renderer;
+
     
     [Header("Attack Properties")]
     [SerializeField] private GameObject attackPoint;
     [SerializeField] private LayerMask layers;
     [SerializeField] private float attackRange = 5f;
+
+    // Class (Composition)
     [SerializeField] private HealthBar healthBar;
 
     private float currentAttackRate = 0f;
-    
     private int currentHealth;
     private bool isGrounded = true;
 
@@ -28,12 +30,13 @@ public class PlayerController : MonoBehaviour
     private const string DIE = "DIE";
     private const string RUNNING = "Running";
 
+
     private void Start()
     {
-
         this.currentHealth = this.maxHealth;
         this.healthBar.SetCurrentHealth(this.currentHealth);
     }
+
 
     void Update()
     {
@@ -42,6 +45,8 @@ public class PlayerController : MonoBehaviour
         Jump();
     }
 
+
+    /** A function that moves the Player. */
     void MovePlayer()
     {
         float horizontal = Input.GetAxisRaw("Horizontal");
@@ -53,6 +58,8 @@ public class PlayerController : MonoBehaviour
         AnimatePlayer(horizontal);
     }
 
+
+    /** Animates the Player. */
     void AnimatePlayer(float horizontal)
     {
         if (horizontal > 0)
@@ -75,6 +82,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+
     // Attack Function
     void Attack()
     {
@@ -86,9 +94,6 @@ public class PlayerController : MonoBehaviour
 
                 Collider2D[] hit = Physics2D.OverlapCircleAll(attackPoint.transform.position, attackRange, layers);
 
-                SoundManager.instance.Play("Normal Attack");
-                SoundManager.instance.PlayDelayed("Normal Attack", 2f);
-
                 foreach (Collider2D collider in hit)
                 {
                     collider.gameObject.GetComponent<Opponent>().TakeDamage(20);
@@ -98,10 +103,10 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+
     /** Jump Function */
     void Jump()
     {
-
         if (Input.GetKeyDown(KeyCode.C) && isGrounded)
         {
             animator.SetTrigger("isJumping");
@@ -146,7 +151,6 @@ public class PlayerController : MonoBehaviour
     }
 
 
-    /** */
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Ground"))
@@ -162,11 +166,13 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+
     private void OnDrawGizmosSelected()
     {
         if (attackPoint != null)
             Gizmos.DrawWireSphere(attackPoint.transform.position, attackRange);
     }
+
 
     public void DestroyThisObject()
     {

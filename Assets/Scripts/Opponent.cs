@@ -9,20 +9,24 @@ public abstract class Opponent : MonoBehaviour
     [SerializeField] protected SpriteRenderer renderer;
     [SerializeField] protected Animator animator;
     [SerializeField] protected GameObject lineOfSight;
-    [SerializeField] protected LayerMask layers;
     [SerializeField] protected Transform toFollow;
+    [SerializeField] protected LayerMask layers;
     [SerializeField] protected int maxHealth;
     [SerializeField] protected float movementSpeed = 3f;
     [SerializeField] protected float lengthOfRay;
     
-    protected int currentHealth;
-    protected float localScaleX;
-
     /* LINE OF SIGHT */
     [Header("Line of Sight Properties")]
     protected RaycastHit2D sight;
     protected float xPositionOfRay;
     protected float distanceOfRay;
+
+    // Class Item (Aggregation)
+    [Header("Item")]
+    [SerializeField] protected Items item;
+
+    protected int currentHealth;
+    protected float localScaleX;
 
     // ANIMATION STATES
     protected const string IS_WALKING = "WALK";
@@ -31,8 +35,6 @@ public abstract class Opponent : MonoBehaviour
     protected const string HIT = "HIT";
     protected const string DIE = "DIE";
 
-    [Header("Item")]
-    [SerializeField] protected Items item;
 
     public Transform ToFollow
     {
@@ -46,47 +48,18 @@ public abstract class Opponent : MonoBehaviour
         }
     }
 
-    public virtual void Move()
-    {
-        Vector3 currentPosition = transform.position;
 
-        if (toFollow.position.x < currentPosition.x)
-        {
-            FlipSprite(true);
-            FlipLineOfSight(true);
-        }
-        else
-        {
-            FlipSprite(false);
-            FlipLineOfSight(false);
-        }
-        transform.position = Vector2.MoveTowards(transform.position, new Vector2(toFollow.position.x, transform.position.y), movementSpeed * Time.deltaTime);
-    }
-
-
-    public virtual void TakeDamage(int damage)
-    {
-        this.currentHealth -= damage;
-
-        animator.SetTrigger(HIT);
-
-        if (this.currentHealth <= 0)
-        {
-            gameObject.GetComponent<Collider2D>().enabled = false;
-            gameObject.GetComponent<Rigidbody2D>().isKinematic = true;
-            animator.SetBool(DIE, true);
-            UpdateScore();
-            Invoke("DestroyThisObject", 1f);
-        }
-    }
-
-
+    /** Destroy the gameObject that is attached to this component. */
     void DestroyThisObject()
     {
         Items powerup = Instantiate(item);
+
+        // Random value of heart powerups.
         powerup.value = Random.Range(1, 11);
+
+        // Set the position of powerup to the position of the gameobject of this script.
         powerup.transform.position = gameObject.transform.position;
-        
+
         Destroy(gameObject);
     }
 
@@ -97,6 +70,61 @@ public abstract class Opponent : MonoBehaviour
     }
 
 
+    public virtual void Move()
+    {
+        Vector3 currentPosition = transform.position;
+
+        /** Check if the object to follow is on the left side. */
+        if (toFollow.position.x < currentPosition.x)
+        {
+            FlipSprite(true);
+            FlipLineOfSight(true);
+        }
+        else
+        {
+            FlipSprite(false);
+            FlipLineOfSight(false);
+        }
+
+        /** MoveTowards to the specified location
+            The first argument is the starting position, second is the 
+            destination point, and the max speed of movement. */
+        transform.position = Vector2.MoveTowards(transform.position, new Vector2(toFollow.position.x, transform.position.y), movementSpeed * Time.deltaTime);
+    }
+
+
+    /* A function that handles damaging this gameObject. 
+        @param damage : int
+        - the value of attack damage.
+     */
+    public virtual void TakeDamage(int damage)
+    {
+        this.currentHealth -= damage;
+
+        animator.SetTrigger(HIT); // Trigger the Hit animation.
+
+        if (this.currentHealth <= 0)
+        {
+            /* Disable the collider and set the rigidbody to kinematic
+             so that the gameobject doesn't react to the possible next
+            attack of the enemy when it is actually dead. */
+            gameObject.GetComponent<Collider2D>().enabled = false;
+            gameObject.GetComponent<Rigidbody2D>().isKinematic = true;
+            animator.SetBool(DIE, true);
+            UpdateScore();
+            // Invoke the "DestroyThisObject" function after 1s so that it has time to finish the "Die" animation.
+            Invoke("DestroyThisObject", 1f); 
+        }
+    }
+
+
+    /** Flipping the sprite.
+    @NOTE: I used the localScale because if 
+    the flipX property of SpriteRenderer is used
+    the collider is not consistent. 
+    
+     @isFlip : bool
+     - If isFlip is true then we flip to left, otherwise, we flip to right. */
     public void FlipSprite(bool isFlip)
     {
         Vector3 currentScale = transform.localScale;
@@ -110,6 +138,8 @@ public abstract class Opponent : MonoBehaviour
     }
 
 
+    /** A function that is responsible for 
+     flipping the line of sight. */
     public void FlipLineOfSight(bool isFlip)
     {
         Vector3 currentPos = lineOfSight.transform.localPosition;
@@ -134,6 +164,6 @@ public abstract class Opponent : MonoBehaviour
     }
 
 
-    // EACH ENEMY HAS DIFFERENT ATTACKS
+    // EACH ENEMY HAS DIFFERENT ATTACKS, SO WE SET IT AS ABSTRACT.
     public abstract void Attack();
 }

@@ -10,11 +10,16 @@ public class SoundManager : MonoBehaviour
     public Sound[] sounds;
     public string onStartMusic;
 
+
     private void Start()
     {
         if (instance == null)
         {
             instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
         }
 
         if (onStartMusic != null)
@@ -23,8 +28,16 @@ public class SoundManager : MonoBehaviour
         }
     }
 
-    // Start is called before the first frame update
+
     void Awake()
+    {
+        SetUpAllAudioClips();
+    }
+
+
+    /* Add audio source to every audio clips in the
+     * sounds array. */
+    private void SetUpAllAudioClips()
     {
         foreach (Sound sound in sounds)
         {
@@ -36,20 +49,20 @@ public class SoundManager : MonoBehaviour
         }
     }
 
+
+    /* Play the sound by a specified name. 
+       @param name
+       - name of sound.
+     */
     public void Play(string name)
     {
         Sound sound = Array.Find(sounds, sound => sound.audioName == name);
         sound.audioSource.Play();
     }
-
-    public void PlayDelayed(string name, float delay)
-    {
-        Sound sound = Array.Find(sounds, sound => sound.audioName == name);
-        sound.audioSource.PlayDelayed(delay);
-    }
 }
 
 
+/** This is the class of Sound */
 [System.Serializable]
 public class Sound
 {
@@ -66,5 +79,4 @@ public class Sound
     public AudioSource audioSource;
 
     public bool isLoop;
-
 }

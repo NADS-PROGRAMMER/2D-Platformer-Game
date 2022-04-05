@@ -15,6 +15,7 @@ public class Tornado : MonoBehaviour
     public float speed;
     public int attackDamage;
 
+
     private void Start()
     {
         /** Invoke after 1 seconds so that
@@ -23,12 +24,15 @@ public class Tornado : MonoBehaviour
         Invoke("Continue", 1f);
     }
 
+
     private void FixedUpdate()
     {
         Move();
         Attack();
     }
 
+
+    /* The Tornado gameObject only moves to the right. */
     public void Move()
     {
         Vector3 currentPos = transform.position;
@@ -36,6 +40,10 @@ public class Tornado : MonoBehaviour
         transform.position = currentPos;
     }
 
+
+    /** The tornado has an attack range that surrounds to it.
+     Every enemy gameObject collides to it takes damage.
+    The damage of tornado is 100. */
     void Attack()
     {
         // Get overlapping collider of enemies to the gameObject we provide.
@@ -47,6 +55,8 @@ public class Tornado : MonoBehaviour
         }
     }
 
+
+    /** Executes the Continue animation. */
     void Continue()
     {
         animator.SetBool("isContinue", true);
@@ -54,11 +64,13 @@ public class Tornado : MonoBehaviour
     }
 
 
+    /** Executes the End animation. */
     void End()
     {
         animator.SetBool("isEnd", true);
         Destroy(gameObject);
     }
+
 
     private void OnDrawGizmosSelected()
     {

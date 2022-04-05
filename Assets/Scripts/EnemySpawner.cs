@@ -8,11 +8,15 @@ public class EnemySpawner : MonoBehaviour
     [SerializeField] private GameObject rightSpawner;
     [SerializeField] private GameObject[] enemies;
 
+
     private void Start()
     {
         StartCoroutine(Spawner());
     }
 
+    /* Runs every 2 to 5 seconds (Random) 
+     This function spawns the enemy randomly between the leftSpawner 
+    and rightSpawner. */
     IEnumerator Spawner()
     {
         while (true)

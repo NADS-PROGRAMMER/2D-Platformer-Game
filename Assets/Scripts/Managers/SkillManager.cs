@@ -23,6 +23,7 @@ public class SkillManager : MonoBehaviour
     public float cooldown2;
     private float currentCooldown2;
 
+
     private void Start()
     {
         if (instance == null)
@@ -33,13 +34,15 @@ public class SkillManager : MonoBehaviour
         currentCooldown1 = 0f;
     }
 
+
     private void Update()
     {
         Skill1();
         Skill2();
     }
 
-    // Sword Swiper
+
+    /** This skill enables user to have a strong damage to an enemy. */
     public void Skill1()
     {
         if (Input.GetKey(KeyCode.Q))
@@ -65,6 +68,8 @@ public class SkillManager : MonoBehaviour
         skill1.fillAmount += (1f / cooldown) * Time.deltaTime;
     }
 
+
+    /** This skills summons the Water Tornado. */
     public void Skill2()
     {
         if (Input.GetKey(KeyCode.W))

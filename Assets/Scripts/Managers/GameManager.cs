@@ -14,13 +14,14 @@ public class GameManager : MonoBehaviour
     public TMPro.TextMeshProUGUI textScore;
     public TMPro.TextMeshProUGUI kills;
     public TMPro.TextMeshProUGUI textHighestKills;
+    private bool isResume = false;
 
     // Data to Save
     [HideInInspector]
     public int noOfKills;
     [HideInInspector]
     public int highestScore = 0;
-    private bool isResume = false;
+
 
     private void Awake()
     {
@@ -79,6 +80,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
+
     public void GameOver()
     {
         Opponent[] opponents = FindObjectsOfType<Opponent>(); // Get the gameObjects holding that holding the opponent script.
@@ -97,11 +99,13 @@ public class GameManager : MonoBehaviour
         panel.LeanScale(Vector2.one, .5f);
     }
 
+
     // Start Game
     public void StartGame()
     {
         SceneManager.LoadScene("Gameplay");
     }
+
 
     // Play Again
     public void PlayAgain()
