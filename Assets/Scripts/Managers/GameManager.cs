@@ -79,19 +79,6 @@ public class GameManager : MonoBehaviour
         }
     }
 
-
-    void Pause()
-    {
-        Time.timeScale = 0f;
-        isResume = true;
-    }
-
-    void Resume()
-    {
-        Time.timeScale = 1f;
-        isResume = false;
-    }
-
     public void GameOver()
     {
         Opponent[] opponents = FindObjectsOfType<Opponent>(); // Get the gameObjects holding that holding the opponent script.
