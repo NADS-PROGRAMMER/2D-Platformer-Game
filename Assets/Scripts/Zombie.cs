@@ -37,7 +37,7 @@ public class Zombie : Opponent
     /** An Attack function */
     public override void Attack()
     {
-        // Array of gameObjects that is overlapped to the attack range of this gameObject.
+        // Array of gameObjects that is overlapped to the attackRange of this gameObject.
         Collider2D[] hitObjects = Physics2D.OverlapCircleAll(attackPoint.transform.position, attackRadius, layers);
 
         RaycastHit2D isSighted = Physics2D.Raycast(lineOfSight.transform.position, new Vector2(lengthOfRay, 0), distanceOfRay, layers);
