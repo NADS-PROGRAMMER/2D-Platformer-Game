@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Boss : MonoBehaviour
 {
-    public float speed = 5f;
+    public float speed;
     public Animator animator;
     public Transform center;
 
@@ -23,13 +23,14 @@ public class Boss : MonoBehaviour
     public GameObject lineOfSight;
     public float lengthOfRay;
     public float currentDirection;
-
+    private float localScale;
     // Start is called before the first frame update
     void Start()
     {
         currentHealth = maxHealth;
         player = GameObject.FindGameObjectWithTag("Player").transform;
         currentDirection = lengthOfRay;
+        localScale = gameObject.transform.localScale.x;
     }
 
 
@@ -62,7 +63,7 @@ public class Boss : MonoBehaviour
         {
             if (collider.gameObject.CompareTag("Player"))
             {
-                collider.gameObject.GetComponent<PlayerController>().TakeDamage(20);
+                collider.gameObject.GetComponent<PlayerController>().TakeDamage(0);
             }
         }
     }
@@ -73,13 +74,14 @@ public class Boss : MonoBehaviour
 
         if (player.transform.position.x < center.position.x)
         {
-            currentScale.x = 4.378948f;
+            // 4.378948f
+            currentScale.x = -this.localScale;
             float currentFace = currentDirection;
             lengthOfRay = -currentFace;
         }
         else
         {
-            currentScale.x = -4.378948f;
+            currentScale.x = this.localScale;
             float currentFace = currentDirection;
             lengthOfRay = +currentFace;
         }

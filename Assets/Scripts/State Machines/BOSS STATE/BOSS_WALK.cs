@@ -39,7 +39,7 @@ public class BOSS_WALK : StateMachineBehaviour
 
             lengthOfRay = animator.GetComponent<Boss>().lengthOfRay;
 
-            Vector2 toFollow = Vector2.MoveTowards(rb.position, new Vector2(player.transform.position.x, rb.position.y), 8 * Time.fixedDeltaTime);
+            Vector2 toFollow = Vector2.MoveTowards(rb.position, new Vector2(player.transform.position.x, rb.position.y), bossScript.speed * Time.fixedDeltaTime);
 
             rb.MovePosition(toFollow);
 
