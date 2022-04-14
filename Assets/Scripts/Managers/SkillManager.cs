@@ -23,6 +23,13 @@ public class SkillManager : MonoBehaviour
     public float cooldown2;
     private float currentCooldown2;
 
+    [Header("Skill 3")]
+    public SpriteRenderer playerSprite;
+    public GameObject waterBall;
+    public Image skill3;
+    public float cooldown3;
+    private float currentCooldown3;
+
 
     private void Start()
     {
@@ -39,8 +46,14 @@ public class SkillManager : MonoBehaviour
     {
         Skill1();
         Skill2();
+        Skill3();
     }
 
+
+    private void LateUpdate()
+    {
+        
+    }
 
     /** This skill enables user to have a strong damage to an enemy. */
     public void Skill1()
@@ -58,7 +71,10 @@ public class SkillManager : MonoBehaviour
 
                 foreach (Collider2D enemy in hitEnemies)
                 {
-                    enemy.gameObject.GetComponent<Opponent>().TakeDamage(30);
+                    if (enemy.gameObject.CompareTag("Boss"))
+                        enemy.gameObject.GetComponent<Boss>().TakeDamage(30);
+                    else
+                        enemy.gameObject.GetComponent<Opponent>().TakeDamage(30);
                 }
                 skill1.fillAmount = 0;
             }
@@ -84,5 +100,42 @@ public class SkillManager : MonoBehaviour
         }
         currentCooldown2 -= Time.deltaTime;
         skill2.fillAmount += (1f / cooldown2) * Time.deltaTime;
+    }
+
+
+    /** This skill summon the water ball **/
+    public void Skill3()
+    {
+        if (Input.GetKey(KeyCode.E))
+        {
+            if (currentCooldown3 <= 0f)
+            {
+                if (playerSprite.flipX)
+                    waterBall.GetComponent<WaterBall>().isFlipped = true;
+                
+                StartCoroutine("WaterBallObj");
+                skill3.fillAmount = 0;
+                currentCooldown3 = cooldown3;
+                skill3.fillAmount = 0f;
+            }
+        }
+        currentCooldown3 -= Time.deltaTime;
+        skill3.fillAmount += (1f / cooldown3) * Time.deltaTime;
+    }
+
+
+    IEnumerator WaterBallObj()
+    {
+        int loop = 3;
+
+        while (loop > 0)
+        {
+            yield return new WaitForSeconds(.2f);
+
+            Instantiate(waterBall);
+            
+            loop -= 1;
+        }
+        waterBall.GetComponent<WaterBall>().isFlipped = false;
     }
 }

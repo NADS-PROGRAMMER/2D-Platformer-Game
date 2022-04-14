@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public abstract class Opponent : MonoBehaviour
 {
@@ -55,7 +56,7 @@ public abstract class Opponent : MonoBehaviour
         Items powerup = Instantiate(item);
 
         // Random value of heart powerups.
-        powerup.value = Random.Range(1, 11);
+        powerup.value = UnityEngine.Random.Range(1, 11);
 
         // Set the position of powerup to the position of the gameobject of this script.
         powerup.transform.position = gameObject.transform.position;
@@ -72,24 +73,31 @@ public abstract class Opponent : MonoBehaviour
 
     public virtual void Move()
     {
-        Vector3 currentPosition = transform.position;
-
-        /** Check if the object to follow is on the left side. */
-        if (toFollow.position.x < currentPosition.x)
+        try
         {
-            FlipSprite(true);
-            FlipLineOfSight(true);
-        }
-        else
-        {
-            FlipSprite(false);
-            FlipLineOfSight(false);
-        }
+            Vector3 currentPosition = transform.position;
 
-        /** MoveTowards to the specified location
-            The first argument is the starting position, second is the 
-            destination point, and the max speed of movement. */
-        transform.position = Vector2.MoveTowards(transform.position, new Vector2(toFollow.position.x, transform.position.y), movementSpeed * Time.deltaTime);
+            /** Check if the object to follow is on the left side. */
+            if (toFollow.position.x < currentPosition.x)
+            {
+                FlipSprite(true);
+                FlipLineOfSight(true);
+            }
+            else
+            {
+                FlipSprite(false);
+                FlipLineOfSight(false);
+            }
+
+            /** MoveTowards to the specified location
+                The first argument is the starting position, second is the 
+                destination point, and the max speed of movement. */
+            transform.position = Vector2.MoveTowards(transform.position, new Vector2(toFollow.position.x, transform.position.y), movementSpeed * Time.deltaTime);
+        }
+        catch(Exception e)
+        {
+            Debug.Log("Object is Destroyed");
+        }
     }
 
 

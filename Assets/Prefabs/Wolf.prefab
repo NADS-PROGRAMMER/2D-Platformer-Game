@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 5997850931455493828}
   m_Layer: 6
   m_Name: Wolf
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -159,10 +159,10 @@ MonoBehaviour:
   renderer: {fileID: 5997850931455493824}
   animator: {fileID: 5997850931455493839}
   lineOfSight: {fileID: 5997850931546071262}
+  toFollow: {fileID: 4696583041681004104, guid: 541da59d375e66a4cb04da6bf7ce3e14, type: 3}
   layers:
     serializedVersion: 2
     m_Bits: 128
-  toFollow: {fileID: 4696583041681004104, guid: 541da59d375e66a4cb04da6bf7ce3e14, type: 3}
   maxHealth: 150
   movementSpeed: 4
   lengthOfRay: 6.95

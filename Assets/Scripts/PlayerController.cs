@@ -96,7 +96,10 @@ public class PlayerController : MonoBehaviour
 
                 foreach (Collider2D collider in hit)
                 {
-                    collider.gameObject.GetComponent<Opponent>().TakeDamage(20);
+                    if (collider.gameObject.CompareTag("Boss"))
+                        collider.gameObject.GetComponent<Boss>().TakeDamage(20);
+                    else
+                        collider.gameObject.GetComponent<Opponent>().TakeDamage(20);
                 }
                 currentAttackRate = Time.time + 1;
             }

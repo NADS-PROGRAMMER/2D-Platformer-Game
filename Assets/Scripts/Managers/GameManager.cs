@@ -15,6 +15,7 @@ public class GameManager : MonoBehaviour
     public TMPro.TextMeshProUGUI kills;
     public TMPro.TextMeshProUGUI textHighestKills;
     private bool isResume = false;
+    public GameObject enemySpawner;
 
     // Data to Save
     [HideInInspector]
@@ -84,10 +85,11 @@ public class GameManager : MonoBehaviour
     public void GameOver()
     {
         Opponent[] opponents = FindObjectsOfType<Opponent>(); // Get the gameObjects holding that holding the opponent script.
-        skillPanel.gameObject.SetActive(false); // Hide the skill panel before showing the game over panel.
+        skillPanel.gameObject.SetActive(false); // Disable the skill panel.
+        enemySpawner.SetActive(false); // Disable the spawner.
 
         // Disable the Enemy Spawner.
-        FindObjectOfType<EnemySpawner>().gameObject.SetActive(false); 
+        //FindObjectOfType<EnemySpawner>().gameObject.SetActive(false); 
 
         // Destroy all of the enemy game objects.
         foreach (Opponent opponent in opponents)

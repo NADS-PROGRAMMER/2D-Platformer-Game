@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class EnemySpawner : MonoBehaviour
 {
@@ -21,13 +22,13 @@ public class EnemySpawner : MonoBehaviour
     {
         while (true)
         {
-            yield return new WaitForSeconds(Random.Range(2, 5));
+            yield return new WaitForSeconds(UnityEngine.Random.Range(2, 5));
 
-            int whereToSpawn = Random.Range(0, 2);
-            int enemyIndex = Random.Range(0, enemies.Length);
+            int whereToSpawn = UnityEngine.Random.Range(0, 2);
+            int enemyIndex = UnityEngine.Random.Range(0, enemies.Length);
 
             GameObject enemy = Instantiate(enemies[enemyIndex]);
-            enemy.GetComponent<Zombie>().ToFollow =  GameObject.FindGameObjectWithTag("Player").transform;
+            enemy.GetComponent<Zombie>().ToFollow = GameObject.FindGameObjectWithTag("Player").transform;
 
             if (whereToSpawn == 0)
             {

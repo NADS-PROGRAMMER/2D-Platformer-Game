@@ -51,7 +51,10 @@ public class Tornado : MonoBehaviour
 
         foreach (Collider2D enemy in enemies)
         {
-            enemy.gameObject.GetComponent<Opponent>().TakeDamage(100);
+            if (enemy.gameObject.CompareTag("Boss"))
+                enemy.gameObject.GetComponent<Boss>().TakeDamage(100);
+            else
+                enemy.gameObject.GetComponent<Opponent>().TakeDamage(100);
         }
     }
 

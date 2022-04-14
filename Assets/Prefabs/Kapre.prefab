@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 3794297279443282685}
   m_Layer: 6
   m_Name: Kapre
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -159,10 +159,10 @@ MonoBehaviour:
   renderer: {fileID: 3794297279443282686}
   animator: {fileID: 3794297279443282684}
   lineOfSight: {fileID: 3794297279962424779}
+  toFollow: {fileID: 4696583041681004104, guid: 541da59d375e66a4cb04da6bf7ce3e14, type: 3}
   layers:
     serializedVersion: 2
     m_Bits: 128
-  toFollow: {fileID: 4696583041681004104, guid: 541da59d375e66a4cb04da6bf7ce3e14, type: 3}
   maxHealth: 200
   movementSpeed: 3
   lengthOfRay: 5.32
