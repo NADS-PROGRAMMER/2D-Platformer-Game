@@ -251,6 +251,7 @@ MonoBehaviour:
   animator: {fileID: 1592057176140047140}
   center: {fileID: 706439888}
   damage: 20
+  heart: {fileID: 489015790943483851, guid: 5b1d466365645b24683effdae60ee0cd, type: 3}
   attackPoint: {fileID: 1592057176071066073}
   radius: 2.21
   player: {fileID: 0}

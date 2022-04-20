@@ -50,6 +50,7 @@ public class Boss : MonoBehaviour
             gameObject.GetComponent<Collider2D>().enabled = false;
             gameObject.GetComponent<Rigidbody2D>().isKinematic = true;
             animator.SetBool("DIE", true);
+
             Invoke("DestroyThisObject", 1f);
         }
     }
@@ -96,6 +97,11 @@ public class Boss : MonoBehaviour
         {
             GameManager.instance.Win();
         }
+        Items item = Instantiate(heart);
+
+        item.value = Random.Range(1, 11);
+        item.transform.position = gameObject.transform.position;
+
         Destroy(gameObject);
     }
 
