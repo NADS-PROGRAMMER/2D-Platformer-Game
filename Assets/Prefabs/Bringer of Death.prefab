@@ -247,9 +247,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa899b117c3db2f438b0c0e28b211cdc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 0.01
+  speed: 5
   animator: {fileID: 1592057176140047140}
   center: {fileID: 706439888}
+  damage: 20
   attackPoint: {fileID: 1592057176071066073}
   radius: 2.21
   player: {fileID: 0}
@@ -257,3 +258,4 @@ MonoBehaviour:
   lineOfSight: {fileID: 1901212227}
   lengthOfRay: 10
   currentDirection: 0
+  isBoss: 1

@@ -24,19 +24,26 @@ public class EnemySpawner : MonoBehaviour
         {
             yield return new WaitForSeconds(UnityEngine.Random.Range(2, 5));
 
-            int whereToSpawn = UnityEngine.Random.Range(0, 2);
-            int enemyIndex = UnityEngine.Random.Range(0, enemies.Length);
-
-            GameObject enemy = Instantiate(enemies[enemyIndex]);
-            enemy.GetComponent<Zombie>().ToFollow = GameObject.FindGameObjectWithTag("Player").transform;
-
-            if (whereToSpawn == 0)
+            try
             {
-                enemy.transform.position = leftSpawner.transform.position;
+
+                int whereToSpawn = UnityEngine.Random.Range(0, 2);
+                int enemyIndex = UnityEngine.Random.Range(0, enemies.Length);
+
+                GameObject enemy = Instantiate(enemies[enemyIndex]);
+
+                if (whereToSpawn == 0)
+                {
+                    enemy.transform.position = leftSpawner.transform.position;
+                }
+                else
+                {
+                    enemy.transform.position = rightSpawner.transform.position;
+                }
             }
-            else
+            catch (Exception e)
             {
-                enemy.transform.position = rightSpawner.transform.position;
+                Debug.Log("FROM ENEMY SPAWNER!");
             }
         }
     }

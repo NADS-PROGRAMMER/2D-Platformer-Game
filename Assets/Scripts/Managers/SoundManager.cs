@@ -3,35 +3,61 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using UnityEngine.Audio;
+using UnityEngine.SceneManagement;
 
 public class SoundManager : MonoBehaviour
 {
     public static SoundManager instance;
     public Sound[] sounds;
-    public string onStartMusic;
-
-
-    private void Start()
-    {
-        if (instance == null)
-        {
-            instance = this;
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
-
-        if (onStartMusic != null)
-        {
-            this.Play(onStartMusic);
-        }
-    }
-
+    public AudioSource currentBGMusic;
 
     void Awake()
     {
+        if (instance != null)
+        {
+            Destroy(gameObject);
+        }
+        else
+        {
+            instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+
         SetUpAllAudioClips();
+    }
+
+
+    private void OnEnable()
+    {
+        SceneManager.sceneLoaded += OnLevelFinishedLoading;
+    }
+
+
+    private void OnDisable()
+    {
+        SceneManager.sceneLoaded -= OnLevelFinishedLoading;
+    }
+
+
+    public void OnLevelFinishedLoading(Scene scene, LoadSceneMode mode)
+    {
+        if (this.currentBGMusic != null)
+        {
+            this.currentBGMusic.Stop();
+        }
+
+        if (scene.name == "Gameplay")
+        {
+            this.PlayBGMusic("AC3");
+        }
+        else if (scene.name == "Main Menu")
+        {
+            this.PlayBGMusic("Assassins Creed");
+        }
+        else if (scene.name == "Credits")
+        {
+
+        }
     }
 
 
@@ -50,13 +76,23 @@ public class SoundManager : MonoBehaviour
     }
 
 
+    /** Stop the all existing music. */
+    private void StopAllMusic()
+    {
+        print("Stopping Music");
+        foreach (Sound sound in sounds)
+        {
+            sound.audioSource.Stop();
+        }
+    }
+
     /* Play the sound by a specified name. 
        @param name
-       - name of sound.
-     */
-    public void Play(string name)
+       - name of sound. */
+    public void PlayBGMusic(string name)
     {
         Sound sound = Array.Find(sounds, sound => sound.audioName == name);
+        this.currentBGMusic = sound.audioSource;
         sound.audioSource.Play();
     }
 }

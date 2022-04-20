@@ -7,6 +7,8 @@ public class Boss : MonoBehaviour
     public float speed;
     public Animator animator;
     public Transform center;
+    public int damage;
+    public Items heart;
 
     [Header("Attack Point Properties")]
     public GameObject attackPoint;
@@ -24,6 +26,9 @@ public class Boss : MonoBehaviour
     public float lengthOfRay;
     public float currentDirection;
     private float localScale;
+
+    public bool isBoss = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -33,12 +38,6 @@ public class Boss : MonoBehaviour
         localScale = gameObject.transform.localScale.x;
     }
 
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 
     public void TakeDamage(int damage)
     {
@@ -51,9 +50,10 @@ public class Boss : MonoBehaviour
             gameObject.GetComponent<Collider2D>().enabled = false;
             gameObject.GetComponent<Rigidbody2D>().isKinematic = true;
             animator.SetBool("DIE", true);
-            Invoke("DestroyThisObject", .8f);
+            Invoke("DestroyThisObject", 1f);
         }
     }
+
 
     public void Attack()
     {
@@ -63,11 +63,12 @@ public class Boss : MonoBehaviour
         {
             if (collider.gameObject.CompareTag("Player"))
             {
-                collider.gameObject.GetComponent<PlayerController>().TakeDamage(0);
+                collider.gameObject.GetComponent<PlayerController>().TakeDamage(this.damage);
             }
         }
     }
 
+    
     public void LookAtPlayer()
     {
         Vector3 currentScale = transform.localScale;
@@ -91,6 +92,10 @@ public class Boss : MonoBehaviour
 
     private void DestroyThisObject()
     {
+        if (this.isBoss)
+        {
+            GameManager.instance.Win();
+        }
         Destroy(gameObject);
     }
 

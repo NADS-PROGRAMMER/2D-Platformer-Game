@@ -8,6 +8,7 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
 
+    public RectTransform text;
     public RectTransform panel;
     public RectTransform skillPanel;
     public RectTransform pausePanel;
@@ -64,11 +65,13 @@ public class GameManager : MonoBehaviour
 
         textHighestKills.text = "Highest Kills: " + PlayerPrefs.GetInt("Highest Kills");
 
-        if (Input.GetKeyDown(KeyCode.Escape))
+        /* */
+        if (Input.GetKeyDown(KeyCode.Escape) && enemySpawner.activeSelf)
         {
             if (!isResume)
             {
                 pausePanel.LeanScale(Vector2.one, .5f);
+                isResume = true;
                 Invoke("Pause", .5f);
             }
             else
@@ -82,36 +85,46 @@ public class GameManager : MonoBehaviour
     }
 
 
+    public void LoadScene(string sceneName)
+    {
+        SceneManager.LoadScene(sceneName);
+    }
+
+    
     public void GameOver()
     {
-        Opponent[] opponents = FindObjectsOfType<Opponent>(); // Get the gameObjects holding that holding the opponent script.
+        this.Test();
+    }
+
+
+    public void Win()
+    {
+        text.gameObject.GetComponent<TMPro.TextMeshProUGUI>().text = "WINNER";
+
+        this.Test();
+    }
+
+
+    public void Pause()
+    {
+        Time.timeScale = 0;
+    }
+
+
+    public void Test()
+    {
+        Boss[] opponents = FindObjectsOfType<Boss>(); // Get the gameObjects holding that holding the opponent script.
+        TimeManager.instance.gameObject.SetActive(false);
         skillPanel.gameObject.SetActive(false); // Disable the skill panel.
         enemySpawner.SetActive(false); // Disable the spawner.
 
-        // Disable the Enemy Spawner.
-        //FindObjectOfType<EnemySpawner>().gameObject.SetActive(false); 
-
         // Destroy all of the enemy game objects.
-        foreach (Opponent opponent in opponents)
+        foreach (Boss opponent in opponents)
         {
             Destroy(opponent.gameObject);
         }
 
         // Show the panel.
         panel.LeanScale(Vector2.one, .5f);
-    }
-
-
-    // Start Game
-    public void StartGame()
-    {
-        SceneManager.LoadScene("Gameplay");
-    }
-
-
-    // Play Again
-    public void PlayAgain()
-    {
-        SceneManager.LoadScene("Gameplay");
     }
 }

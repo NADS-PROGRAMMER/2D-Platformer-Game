@@ -54,7 +54,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 593608202}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.064, y: 0, z: 0}
+  m_LocalPosition: {x: 0.086, y: 0.011, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 5932207310959849161}
@@ -173,7 +173,7 @@ SpriteRenderer:
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 0.33, y: 0.36}
+  m_Size: {x: 1.01, y: 0.53}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -213,7 +213,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 1
+  m_GravityScale: 10
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
@@ -232,9 +232,9 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.03160929, y: -0.017882844}
-  m_Size: {x: 0.3242347, y: 0.3242346}
-  m_Direction: 1
+  m_Offset: {x: 0.008586279, y: -0.022335578}
+  m_Size: {x: 0.16000813, y: 0.33314136}
+  m_Direction: 0
 --- !u!114 &871550484
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -247,13 +247,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa899b117c3db2f438b0c0e28b211cdc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 5
+  speed: 4
   animator: {fileID: 5932207310959849160}
   center: {fileID: 1892414553}
+  damage: 5
+  heart: {fileID: 489015790943483851, guid: 5b1d466365645b24683effdae60ee0cd, type: 3}
   attackPoint: {fileID: 593608202}
-  radius: 1.72
+  radius: 1.16
   player: {fileID: 0}
   maxHealth: 150
   lineOfSight: {fileID: 194498108}
   lengthOfRay: 10
   currentDirection: 0
+  isBoss: 0

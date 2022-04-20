@@ -38,6 +38,17 @@ public class PlayerController : MonoBehaviour
     }
 
 
+    private void OnEnable()
+    {
+        print("Hello from Player Controller");
+    }
+
+
+    private void OnDisable()
+    {
+        print("Goodbye from Player Controller");
+    }
+
     void Update()
     {
         MovePlayer();
