@@ -56,7 +56,8 @@ public class SoundManager : MonoBehaviour
         }
         else if (scene.name == "Credits")
         {
-
+            this.PlayBGMusic("Assassins Creed");
+            this.currentBGMusic.time = 38f;
         }
     }
 
@@ -76,16 +77,6 @@ public class SoundManager : MonoBehaviour
     }
 
 
-    /** Stop the all existing music. */
-    private void StopAllMusic()
-    {
-        print("Stopping Music");
-        foreach (Sound sound in sounds)
-        {
-            sound.audioSource.Stop();
-        }
-    }
-
     /* Play the sound by a specified name. 
        @param name
        - name of sound. */
@@ -93,7 +84,7 @@ public class SoundManager : MonoBehaviour
     {
         Sound sound = Array.Find(sounds, sound => sound.audioName == name);
         this.currentBGMusic = sound.audioSource;
-        sound.audioSource.Play();
+        this.currentBGMusic.Play();
     }
 }
 

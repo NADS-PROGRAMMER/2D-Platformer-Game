@@ -297,7 +297,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 8.399999, y: 40.34353}
+  m_AnchoredPosition: {x: 8.399999, y: 62.830574}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &173541295
@@ -430,12 +430,7 @@ MonoBehaviour:
   panel: {fileID: 0}
   skillPanel: {fileID: 0}
   pausePanel: {fileID: 0}
-  textScore: {fileID: 0}
-  kills: {fileID: 0}
-  textHighestKills: {fileID: 0}
   enemySpawner: {fileID: 0}
-  noOfKills: 0
-  highestScore: 0
 --- !u!4 &179569801
 Transform:
   m_ObjectHideFlags: 0
@@ -1203,7 +1198,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.7735849, g: 0.71155214, b: 0.71155214, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1

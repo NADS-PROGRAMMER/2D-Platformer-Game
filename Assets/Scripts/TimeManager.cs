@@ -8,8 +8,8 @@ public class TimeManager : MonoBehaviour
     public static TimeManager instance;
 
     public RectTransform bossText;
-    public float time;
     public bool isNotOver = false;
+    public float time;
 
     [Header("Need Objects")]
     public GameObject Spawner;
@@ -29,13 +29,16 @@ public class TimeManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        /* Bawasan yung time by 1 proportional sa passed frame. */
         time -= 1 * Time.deltaTime;
 
+        /* To avoid na mag run ito kahit less than or equal to 0 na ang time,
+         we set a boolean variable "isNotOver" (By Default is False) to check it. */
         if (time <= 0 && !isNotOver)
         {
             bossText.LeanScale(Vector2.one, .5f);
             GameObject boss = Instantiate(Boss);
-            boss.transform.position = Spawner.transform.GetChild(1).position;
+            boss.transform.position = new Vector2(Spawner.transform.GetChild(1).position.x, boss.transform.position.y);
             Spawner.gameObject.SetActive(false);
             isNotOver = true;
             StartCoroutine("CloseText");

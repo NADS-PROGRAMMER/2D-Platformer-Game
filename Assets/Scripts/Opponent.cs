@@ -65,12 +65,6 @@ public abstract class Opponent : MonoBehaviour
     }
 
 
-    void UpdateScore()
-    {
-        GameManager.instance.noOfKills += 1;
-    }
-
-
     public virtual void Move()
     {
         try
@@ -119,7 +113,6 @@ public abstract class Opponent : MonoBehaviour
             gameObject.GetComponent<Collider2D>().enabled = false;
             gameObject.GetComponent<Rigidbody2D>().isKinematic = true;
             animator.SetBool(DIE, true);
-            UpdateScore();
             // Invoke the "DestroyThisObject" function after 1s so that it has time to finish the "Die" animation.
             Invoke("DestroyThisObject", 1f); 
         }

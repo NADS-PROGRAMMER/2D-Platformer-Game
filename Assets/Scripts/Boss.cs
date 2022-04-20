@@ -43,10 +43,12 @@ public class Boss : MonoBehaviour
     {
         currentHealth -= damage;
 
-        animator.SetTrigger("HIT");
+        animator.SetTrigger("HIT"); // Trigger the HIT animation.
 
         if (currentHealth <= 0)
         {
+            /** Naka false ang Collider para hindi siya ma trigger ulit 
+             if ang player is inatake ito habang namamatay. */
             gameObject.GetComponent<Collider2D>().enabled = false;
             gameObject.GetComponent<Rigidbody2D>().isKinematic = true;
             animator.SetBool("DIE", true);
@@ -97,6 +99,7 @@ public class Boss : MonoBehaviour
         {
             GameManager.instance.Win();
         }
+
         Items item = Instantiate(heart);
 
         item.value = Random.Range(1, 11);

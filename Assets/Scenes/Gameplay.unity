@@ -1945,7 +1945,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 330008976}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -22.31, y: -4.6, z: 0}
+  m_LocalPosition: {x: -22.31, y: -6.17, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1855329616}
@@ -2552,7 +2552,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 519420028}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.6728072, y: -0.18099976, z: -10}
+  m_LocalPosition: {x: 3.6704483, y: -0.18099976, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -2805,7 +2805,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 680984259}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.6728072, y: -0.18099976, z: -10}
+  m_LocalPosition: {x: 3.6704483, y: -0.18099976, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 238801478}
@@ -4572,8 +4572,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bossText: {fileID: 1244994276}
-  time: 20
   isNotOver: 0
+  time: 30
   Spawner: {fileID: 1855329615}
   Boss: {fileID: 1592057176140047145, guid: 8010d63f4f5d68d48b2708f3e3c321d4, type: 3}
 --- !u!4 &1252870454
@@ -4693,7 +4693,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1344303738}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 64.75, y: -4.6, z: 0}
+  m_LocalPosition: {x: 64.75, y: -6.17, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1855329616}
@@ -6116,6 +6116,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1127860971, guid: 541da59d375e66a4cb04da6bf7ce3e14, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1127860972, guid: 541da59d375e66a4cb04da6bf7ce3e14, type: 3}
+      propertyPath: m_BodyType
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1127860974, guid: 541da59d375e66a4cb04da6bf7ce3e14, type: 3}
       propertyPath: healthBar
       value: 
@@ -6337,12 +6345,7 @@ MonoBehaviour:
   panel: {fileID: 1314019570}
   skillPanel: {fileID: 1426321230}
   pausePanel: {fileID: 928373208}
-  textScore: {fileID: 1666889060}
-  kills: {fileID: 1738875853}
-  textHighestKills: {fileID: 1662651576}
   enemySpawner: {fileID: 1855329615}
-  noOfKills: 0
-  highestScore: 0
 --- !u!4 &1749826580
 Transform:
   m_ObjectHideFlags: 0
@@ -7491,7 +7494,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2336722284832990201, guid: 9f26c50b2e53d5f4dbd807cc4e83bb9c, type: 3}
       propertyPath: ShapeModule.radiusThickness
-      value: 1.0000
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2336722284832990201, guid: 9f26c50b2e53d5f4dbd807cc4e83bb9c, type: 3}
       propertyPath: InitialModule.startSize.scalar
