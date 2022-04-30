@@ -99,7 +99,7 @@ public class PlayerController : MonoBehaviour
     {
         if (Time.time >= currentAttackRate)
         {
-            if (Input.GetKey(KeyCode.Space))
+            if (Input.GetKey(KeyCode.Mouse0))
             {
                 animator.SetTrigger("Attack");
 
@@ -121,7 +121,7 @@ public class PlayerController : MonoBehaviour
     /** Jump Function */
     void Jump()
     {
-        if (Input.GetKeyDown(KeyCode.C) && isGrounded)
+        if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
         {
             animator.SetTrigger("isJumping");
             body.AddForce(new Vector2(0, jumpForce), ForceMode2D.Impulse);

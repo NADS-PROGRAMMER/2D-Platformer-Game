@@ -15,7 +15,12 @@ public class WaterBall : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        gameObject.transform.position = GameObject.FindGameObjectWithTag("Player").transform.GetChild(0).position;
+        Vector2 player = GameObject.FindGameObjectWithTag("Player").transform.GetChild(0).position;
+
+        if (isFlipped)
+            gameObject.transform.position = new Vector2(player.x - 1.5f, player.y);
+        else
+            gameObject.transform.position = new Vector2(player.x + 1.5f, player.y);
         gameObject.GetComponent<SpriteRenderer>().flipX = isFlipped;
 
         Invoke("DestroyThisObj", 1f);

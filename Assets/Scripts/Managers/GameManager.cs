@@ -45,20 +45,19 @@ public class GameManager : MonoBehaviour
     private void Update()
     {
         /* */
-        if (Input.GetKeyDown(KeyCode.Escape) && enemySpawner.activeSelf)
+        if (Input.GetKeyUp(KeyCode.Escape) && enemySpawner.activeSelf)
         {
             if (!isResume)
             {
-                pausePanel.LeanScale(Vector2.one, .5f);
+                pausePanel.LeanScale(Vector2.one, .1f);
                 isResume = true;
-                Invoke("Pause", .5f);
+                Invoke("Pause", .1f);
             }
             else
             {
                 Time.timeScale = 1;
                 isResume = false;
-                pausePanel.LeanScale(Vector2.zero, .5f);
-                
+                pausePanel.LeanScale(Vector2.zero, .1f);
             }
         }
     }

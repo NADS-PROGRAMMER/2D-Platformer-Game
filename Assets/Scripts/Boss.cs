@@ -52,7 +52,7 @@ public class Boss : MonoBehaviour
             gameObject.GetComponent<Collider2D>().enabled = false;
             gameObject.GetComponent<Rigidbody2D>().isKinematic = true;
             animator.SetBool("DIE", true);
-
+            ScoreManager.instance.UpdateKill();
             Invoke("DestroyThisObject", 1f);
         }
     }
